@@ -1,22 +1,34 @@
 use map_macro::hash_map;
 
-use dit_as_91896::menu;
+use dit_as_91896::food::Items;
 
 fn main() {
-    // let menu_items = menu::Items::new(vec![String::from("wow")], vec![], vec![]);
-    // println!("{menu_items}");
-    println!("Hello, world!\n\n");
-
-    let items: menu::Items = menu::Items {
+    let food: Items = Items {
         food: hash_map! {
-            String::from("0") => 0.0,
+            String::from("cooked barito") => 15.0,
         },
         drinks: hash_map! {
-            String::from("1") => 1.0,
+            String::from("coke") => 6.0,
         },
         sides: hash_map! {
-            String::from("2") => 2.0,
+            String::from("rice") => 8.0,
         },
     };
-    println!(r#"{items}"#)
+
+    let cost_of_food: Items = Items {
+        food: hash_map! {
+            String::from("cooked barito") => 6.0,
+        },
+        drinks: hash_map! {
+            String::from("coke") => 1.0,
+        },
+        sides: hash_map! {
+            String::from("rice") => 0.5,
+        },
+    };
+
+    println!(
+        "to buy costs:\n{}\n\nto make costs:\n{}",
+        food, cost_of_food
+    )
 }
