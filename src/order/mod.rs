@@ -1,10 +1,18 @@
 use crate::food::Items;
-use std::{collections::HashMap, fmt::Display};
+use std::{
+    collections::HashMap,
+    fmt::{format, write, Display},
+    process::Output,
+};
+
+#[derive(Clone)]
 pub struct Order {
     pub order: Items,
     pub menu_items: Items,
     pub cost_for_items: Items,
 }
+
+pub struct OrdersVec(pub Vec<Order>);
 
 impl Order {
     /**
@@ -111,6 +119,20 @@ impl Display for Order {
     # Allows Order To Be Printed
     */
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{}", self.order).as_str())
+        write!(f, "{}", self.order)
+    }
+}
+
+impl Display for OrdersVec {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut output = String::from("orders: [");
+
+        for (x, order) in self.0.iter().enumerate() {
+            output.push_str(format!("\n    {}: {{ {} }},", x, order).as_str())
+        }
+
+        output.replace_range((output.len() - 1).., "\n]");
+
+        write!(f, "{output}")
     }
 }

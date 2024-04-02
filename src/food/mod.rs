@@ -1,6 +1,7 @@
 use core::fmt;
 use std::{collections::HashMap, fmt::Display};
 
+#[derive(Clone)]
 pub struct Items {
     pub food: HashMap<String, f64>,
     pub drinks: HashMap<String, f64>,
@@ -75,32 +76,34 @@ impl Display for Items {
     ///     assert!(format!("{items}").as_str() == "food: {\n    0: costs $0.00\n},\ndrinks: {\n    1: costs $1.00\n},\nsides: {\n    2: costs $2.00\n},");
     /// ```
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut output: String = String::from("food: {\n");
+        let mut food: String = String::new();
+        let mut drinks: String = String::new();
+        let mut sides: String = String::new();
 
         if self.food.keys().len() != 0usize {
             for (item, price) in &self.food {
-                output.push_str(format!("    {}: costs ${:.2},\n", item.as_str(), price).as_str());
+                food.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
             }
-            output.replace_range((output.len() - 2).., "\n")
+            food.replace_range((food.len() - 1).., "")
         }
-        output.push_str("},\ndrinks: {\n");
 
         if self.drinks.keys().len() != 0usize {
             for (item, price) in &self.drinks {
-                output.push_str(format!("    {}: costs ${:.2},\n", item.as_str(), price).as_str())
+                drinks.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str())
             }
-            output.replace_range((output.len() - 2).., "\n")
+            drinks.replace_range((drinks.len() - 1).., "")
         }
-        output.push_str("},\nsides: {\n");
 
-        if self.drinks.keys().len() != 0usize {
+        if self.sides.keys().len() != 0usize {
             for (item, price) in &self.sides {
-                output.push_str(format!("    {}: costs ${:.2},\n", item.as_str(), price).as_str());
+                sides.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
             }
-            output.replace_range((output.len() - 2).., "\n")
+            sides.replace_range((sides.len() - 1).., "")
         }
-        output.push_str("},");
 
-        write!(f, "{output}")
+        write!(
+            f,
+            "food: {{{food}}}, drinks: {{{drinks}}}, sides: {{{sides}}}"
+        )
     }
 }
