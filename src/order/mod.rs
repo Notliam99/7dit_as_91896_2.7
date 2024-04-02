@@ -1,9 +1,5 @@
 use crate::food::Items;
-use std::{
-    collections::HashMap,
-    fmt::{format, write, Display},
-    process::Output,
-};
+use std::{collections::HashMap, fmt::Display};
 
 #[derive(Clone)]
 pub struct Order {
