@@ -1,5 +1,5 @@
 use core::fmt;
-use std::{collections::HashMap, fmt::Display};
+use std::{collections::HashMap, fmt::Display, process::Output};
 
 #[derive(Clone)]
 pub struct Items {
@@ -51,6 +51,37 @@ impl Items {
             drinks,
             sides,
         }
+    }
+
+    pub fn menu_view(&self) -> String {
+        let mut food: String = String::new();
+        let mut drinks: String = String::new();
+        let mut sides: String = String::new();
+
+        if self.food.keys().len() != 0usize {
+            for (item, price) in &self.food {
+                food.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
+            }
+            food.replace_range((food.len() - 1).., "")
+        }
+
+        if self.drinks.keys().len() != 0usize {
+            for (item, price) in &self.drinks {
+                drinks.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str())
+            }
+            drinks.replace_range((drinks.len() - 1).., "")
+        }
+
+        if self.sides.keys().len() != 0usize {
+            for (item, price) in &self.sides {
+                sides.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
+            }
+            sides.replace_range((sides.len() - 1).., "")
+        }
+
+        String::from(format!(
+            "Food\n    {food}\n\nDrinks\n    {drinks}\n\nSides\n    {sides}"
+        ))
     }
 }
 
