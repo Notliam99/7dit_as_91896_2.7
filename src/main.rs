@@ -8,7 +8,7 @@ use crossterm::{
     execute,
     terminal::{Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
-/* use ctrlc; */
+
 use dit_as_91896::{
     food::Items,
     order::{Order, OrdersVec},
@@ -16,9 +16,15 @@ use dit_as_91896::{
 use map_macro::hash_map;
 use text_io::read;
 
-fn user_order(user_menu: &Items, cost_menu: &Items) -> Order {
+fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Order {
     let mut order = Order::new(user_menu.clone(), cost_menu.clone());
-    println!("MENU\n{}\n\n\nCURENT ORDER\n{order}", user_menu.menu_view());
+
+    execute!(stdout(), Clear(ClearType::All)).unwrap();
+
+    println!(
+        "MENU\n{}\n\n\nCURENT ORDER: ({number_order})\n{order}",
+        user_menu.menu_view()
+    );
 
     loop {
         print!("\nAdd To Order: ");
@@ -32,12 +38,19 @@ fn user_order(user_menu: &Items, cost_menu: &Items) -> Order {
             Err(_) => true,
         };
 
+        execute!(stdout(), Clear(ClearType::All)).unwrap();
+
+        println!(
+            "MENU\n{}\n\n\nCURENT ORDER: ({number_order})\n{order}",
+            user_menu.menu_view()
+        );
+
         if found {
             println!("Did Not Reconise Item");
             continue;
         }
 
-        print!("\n\n Do You Want To Add More [Y/N]");
+        print!("\n\n Do You Want To Add More? [Y/N]");
 
         let exit: String = read!("{}\n");
 
@@ -93,11 +106,26 @@ fn main() {
     let mut orders: Vec<Order> = Vec::new();
 
     loop {
-        orders.push(user_order(&food, &cost_of_food));
-        break;
+        orders.push(user_order(&food, &cost_of_food, orders.len()));
+
+        execute!(stdout(), Clear(ClearType::All)).unwrap();
+        println!("{}", OrdersVec(orders.clone()));
+
+        print!("\n\n Do You Want To Add A Order? [Y/N]");
+
+        let exit: String = read!("{}\n");
+
+        if exit.to_lowercase() != String::from("y") {
+            break;
+        }
     }
 
     println!("{}", OrdersVec(orders.clone()));
+
+    for i in orders.iter() {
+        let cost_profit = i.cost_profit();
+        println!("{:?}", cost_profit)
+    }
 
     // on exit it closes out
     execute!(
@@ -107,6 +135,11 @@ fn main() {
         Clear(ClearType::CurrentLine)
     )
     .unwrap();
+
+    for i in orders.iter() {
+        let cost_profit = i.cost_profit();
+        println!("{:?}", cost_profit)
+    }
 
     println!("{}", OrdersVec(orders));
 }

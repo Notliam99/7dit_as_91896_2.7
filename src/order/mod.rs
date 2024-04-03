@@ -147,6 +147,55 @@ impl Order {
             Err("Error: The Item Could Not Be Found On The Menu.")
         }
     }
+
+    /**
+    # Calculate the Cost and profit.
+
+    Find for the Customer and the profit for the store.\
+
+    Returns:
+        (
+            cost_user: f64,
+            profit_store: f64
+        )
+    */
+    pub fn cost_profit(&self) -> (f64, f64) {
+        let food_earnings: Vec<f64> = self.order.food.values().cloned().collect();
+        let sides_earnings: Vec<f64> = self.order.sides.values().cloned().collect();
+        let drinks_earnings: Vec<f64> = self.order.drinks.values().cloned().collect();
+
+        let cost_user: f64 = food_earnings.iter().sum::<f64>()
+            + drinks_earnings.iter().sum::<f64>()
+            + sides_earnings.iter().sum::<f64>();
+
+        let mut profit_store: f64 = 0.0;
+
+        for (key, value) in &self.order.food {
+            let cost_item: f64 = *self.menu_items.food.get(key).unwrap();
+
+            let quantiy: f64 = value / cost_item;
+
+            profit_store += quantiy * (cost_item - *self.cost_for_items.food.get(key).unwrap());
+        }
+
+        for (key, value) in &self.order.drinks {
+            let cost_item: f64 = *self.menu_items.drinks.get(key).unwrap();
+
+            let quantiy: f64 = value / cost_item;
+
+            profit_store += quantiy * (cost_item - *self.cost_for_items.drinks.get(key).unwrap());
+        }
+
+        for (key, value) in &self.order.sides {
+            let cost_item: f64 = *self.menu_items.sides.get(key).unwrap();
+
+            let quantiy: f64 = value / cost_item;
+
+            profit_store += quantiy * (cost_item - *self.cost_for_items.sides.get(key).unwrap());
+        }
+
+        (cost_user, profit_store)
+    }
 }
 
 impl Display for Order {
