@@ -74,9 +74,12 @@ impl Order {
             cost_menu
         );
 
+        // adds two of the food.
         my_order.order_add(String::from("test_food")).unwrap();
 
-        let order_output = Items::new(hash_map! { String::from("test_food") => 2.0 }, HashMap::new(), HashMap::new());
+        my_order.order_add(String::from("test_food")).unwrap();
+
+        let order_output = Items::new(hash_map! { String::from("test_food") => 4.0 }, HashMap::new(), HashMap::new());
 
         assert!(my_order.order.food == order_output.food);
         assert!(my_order.order.drinks == order_output.drinks);
@@ -87,23 +90,59 @@ impl Order {
     */
     pub fn order_add(&mut self, item_name: String) -> Result<(), &'static str> {
         if self.menu_items.food.contains_key(&item_name) {
-            self.order.food.insert(
-                item_name.clone(),
-                *self.menu_items.food.get(&item_name.clone()).unwrap(),
-            );
-            Ok(())
+            // checks if item_name is in food
+
+            if self.order.food.contains_key(&item_name) {
+                // checks if theres allredy one in order
+
+                let price: f64 = self.order.food.get(&item_name).unwrap()
+                    + *self.menu_items.food.get(&item_name.clone()).unwrap();
+
+                self.order.food.insert(item_name.clone(), price);
+                Ok(())
+            } else {
+                self.order.food.insert(
+                    item_name.clone(),
+                    *self.menu_items.food.get(&item_name.clone()).unwrap(),
+                );
+                Ok(())
+            }
         } else if self.menu_items.drinks.contains_key(&item_name) {
-            self.order.drinks.insert(
-                item_name.clone(),
-                *self.menu_items.drinks.get(&item_name.clone()).unwrap(),
-            );
-            Ok(())
+            // checks if item_name is in drinks
+
+            if self.order.drinks.contains_key(&item_name) {
+                // checks if theres allredy one in order
+
+                let price: f64 = self.order.drinks.get(&item_name).unwrap()
+                    + *self.menu_items.drinks.get(&item_name.clone()).unwrap();
+
+                self.order.drinks.insert(item_name.clone(), price);
+                Ok(())
+            } else {
+                self.order.drinks.insert(
+                    item_name.clone(),
+                    *self.menu_items.drinks.get(&item_name.clone()).unwrap(),
+                );
+                Ok(())
+            }
         } else if self.menu_items.sides.contains_key(&item_name) {
-            self.order.sides.insert(
-                item_name.clone(),
-                *self.menu_items.sides.get(&item_name.clone()).unwrap(),
-            );
-            Ok(())
+            // checks if item_name is in sides
+
+            if self.order.sides.contains_key(&item_name) {
+                // checks if theres allredy one in order
+
+                let price: f64 = self.order.sides.get(&item_name).unwrap()
+                    + *self.menu_items.sides.get(&item_name.clone()).unwrap();
+
+                self.order.sides.insert(item_name.clone(), price);
+                Ok(())
+            } else {
+                self.order.sides.insert(
+                    item_name.clone(),
+                    *self.menu_items.sides.get(&item_name.clone()).unwrap(),
+                );
+                Ok(())
+            }
         } else {
             Err("Error: The Item Could Not Be Found On The Menu.")
         }
