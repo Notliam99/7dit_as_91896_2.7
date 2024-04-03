@@ -1,5 +1,5 @@
 use core::fmt;
-use std::{collections::HashMap, fmt::Display, process::Output};
+use std::{collections::HashMap, fmt::Display};
 
 #[derive(Clone)]
 pub struct Items {

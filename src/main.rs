@@ -8,7 +8,7 @@ use crossterm::{
     execute,
     terminal::{Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use ctrlc;
+/* use ctrlc; */
 use dit_as_91896::{
     food::Items,
     order::{Order, OrdersVec},
@@ -25,13 +25,23 @@ fn user_order(user_menu: &Items, cost_menu: &Items) -> Order {
         stdout().flush().unwrap();
         let add: String = read!("{}\n");
 
-        order.order_add(add).unwrap();
+        let add_vec: Vec<&str> = add.trim().split_whitespace().collect();
+
+        let found: bool = match order.order_add(add_vec.join(" ")) {
+            Ok(_) => false,
+            Err(_) => true,
+        };
+
+        if found {
+            println!("Did Not Reconise Item");
+            continue;
+        }
 
         print!("\n\n Do You Want To Add More [Y/N]");
 
-        let exit: String = read!("{}");
+        let exit: String = read!("{}\n");
 
-        if exit.to_lowercase() == String::from("y") {
+        if exit.to_lowercase() != String::from("y") {
             break;
         }
     }
@@ -69,7 +79,13 @@ fn main() {
     execute!(stdout(), EnterAlternateScreen, Clear(ClearType::All)).unwrap();
 
     ctrlc::set_handler(move || {
-        execute!(stdout(), LeaveAlternateScreen).unwrap();
+        execute!(
+            stdout(),
+            LeaveAlternateScreen,
+            MoveUp(1),
+            Clear(ClearType::CurrentLine)
+        )
+        .unwrap();
         process::exit(1)
     })
     .unwrap();
