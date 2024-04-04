@@ -3,7 +3,7 @@ name = "dit-as-91896"
 version = "0.1.0"
 edition = "2021"
 description = "A Ncea Project That Allow User To Order Food."
-license = "GPL-3.0 license"
+license = "GPL-3.0"
 readme = "README.md"
 license-file = "LICENSE"
 
