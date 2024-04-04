@@ -34,8 +34,8 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
         let add_vec: Vec<&str> = add.trim().split_whitespace().collect();
 
         let found: bool = match order.order_add(add_vec.join(" ")) {
-            Ok(_) => false,
-            Err(_) => true,
+            Ok(_) => true,
+            Err(_) => false,
         };
 
         execute!(stdout(), Clear(ClearType::All)).unwrap();
@@ -45,7 +45,7 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
             user_menu.menu_view()
         );
 
-        if found {
+        if !found {
             println!("\n---?---\nDidn't Reconise Item\n---?---");
             continue;
         }
@@ -65,25 +65,37 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
 fn main() {
     let food: Items = Items {
         food: hash_map! {
-            String::from("cooked barito") => 15.0,
+            String::from("Black Bean Beef Burrito") => 16.0,
+            String::from("Extra Spicy Beff barrito") => 14.5,
+            String::from("Corn Beff Barrito") => 16.0,
         },
         drinks: hash_map! {
-            String::from("coke") => 6.0,
+            String::from("Coke") => 6.0,
+            String::from("Sprite") => 6.0,
+            String::from("Fanta") => 6.0
         },
         sides: hash_map! {
-            String::from("rice") => 8.0,
+            String::from("Rice") => 3.5,
+            String::from("Corn Chips") => 5.0,
+            String::from("Guacamole") => 2.5
         },
     };
 
     let cost_of_food: Items = Items {
         food: hash_map! {
-            String::from("cooked barito") => 6.0,
+            String::from("Black Bean Beef Burrito") => 7.5,
+            String::from("Extra Spicy Beff barrito") => 7.0,
+            String::from("Corn Beff Barrito") => 7.5,
         },
         drinks: hash_map! {
-            String::from("coke") => 1.0,
+            String::from("Coke") => 3.0,
+            String::from("Sprite") => 3.0,
+            String::from("Fanta") => 3.0
         },
         sides: hash_map! {
-            String::from("rice") => 0.5,
+            String::from("Rice") => 1.5,
+            String::from("Corn Chips") => 2.0,
+            String::from("Guacamole") => 0.5
         },
     };
 

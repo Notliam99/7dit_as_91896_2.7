@@ -1,9 +1,8 @@
 [package]
 name = "dit-as-91896"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "A Ncea Project That Allow User To Order Food."
-license = "GPL-3.0"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/Notliam99/7dit_as_91896_2.7.git"
