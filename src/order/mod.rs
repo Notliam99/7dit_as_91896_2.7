@@ -84,8 +84,6 @@ impl Order {
         assert!(my_order.order.food == order_output.food);
         assert!(my_order.order.drinks == order_output.drinks);
         assert!(my_order.order.sides == order_output.sides);
-
-
     ```
     */
     pub fn order_add(&mut self, item_name: String) -> Result<(), &'static str> {
@@ -154,10 +152,52 @@ impl Order {
     Find for the Customer and the profit for the store.\
 
     Returns:
-        (
+        Vec<f64>: [
             cost_user: f64,
             profit_store: f64
-        )
+        ]
+
+    # Example
+
+    ```rust
+        use map_macro::hash_map;
+        use std::collections::HashMap;
+
+        use dit_as_91896::{
+            order::Order,
+            food::Items
+        };
+
+        // cost to user
+        let menu = Items::new(
+            hash_map! {
+                String::from("test_food") => 2.0
+            },
+            HashMap::new(),
+            HashMap::new()
+        );
+
+        // cost of items for eg "the store"
+        let cost_menu = Items::new(
+            hash_map! {
+                String::from("test_food") => 1.0
+            },
+            HashMap::new(),
+            HashMap::new()
+        );
+
+        let mut my_order: Order = Order::new(
+            menu,
+            cost_menu
+        );
+
+        // adds two of the food.
+        my_order.order_add(String::from("test_food")).unwrap();
+
+        my_order.order_add(String::from("test_food")).unwrap();
+
+        assert!(my_order.cost_profit() == vec![4.0, 2.0]);
+    ```
     */
     pub fn cost_profit(&self) -> Vec<f64> {
         let food_earnings: Vec<f64> = self.order.food.values().cloned().collect();
