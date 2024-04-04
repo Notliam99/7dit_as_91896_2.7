@@ -19,3 +19,8 @@ This Is CLI Application First.
     # Run Unit Test's To Prove It Works!!!
     cargo test
 ```
+
+# Links
+- [github.com](https://github.com/Notliam99/7dit_as_91896_2.7)
+- [crates.io](https://crates.io/crates/dit-as-91896)
+- [docs.rs](https://docs.rs/dit-as-91896/latest/dit_as_91896/)
