@@ -141,7 +141,7 @@ fn main() {
     .unwrap();
 
     println!(
-        "{}\n\nTotal Sales (gross): {}\n\nTotal profit: {}",
+        "{}\n\nTotal Sales (gross): ${:.2}\n\nTotal profit: ${:.2}",
         OrdersVec(orders),
         total_cost_profit[0],
         total_cost_profit[1]
