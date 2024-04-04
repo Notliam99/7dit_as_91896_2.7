@@ -46,7 +46,7 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
         );
 
         if found {
-            println!("Did Not Reconise Item");
+            println!("\n---?---\nDidn't Reconise Item\n---?---");
             continue;
         }
 
