@@ -159,7 +159,7 @@ impl Order {
             profit_store: f64
         )
     */
-    pub fn cost_profit(&self) -> (f64, f64) {
+    pub fn cost_profit(&self) -> Vec<f64> {
         let food_earnings: Vec<f64> = self.order.food.values().cloned().collect();
         let sides_earnings: Vec<f64> = self.order.sides.values().cloned().collect();
         let drinks_earnings: Vec<f64> = self.order.drinks.values().cloned().collect();
@@ -194,7 +194,7 @@ impl Order {
             profit_store += quantiy * (cost_item - *self.cost_for_items.sides.get(key).unwrap());
         }
 
-        (cost_user, profit_store)
+        vec![cost_user, profit_store]
     }
 }
 

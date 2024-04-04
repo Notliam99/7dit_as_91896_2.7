@@ -122,9 +122,13 @@ fn main() {
 
     println!("{}", OrdersVec(orders.clone()));
 
+    let mut total_cost_profit: Vec<f64> = vec![0.0, 0.0];
+
     for i in orders.iter() {
-        let cost_profit = i.cost_profit();
-        println!("{:?}", cost_profit)
+        let cost_profit: Vec<f64> = i.cost_profit();
+
+        total_cost_profit[0] = total_cost_profit[0] + cost_profit[0];
+        total_cost_profit[1] = total_cost_profit[1] + cost_profit[1];
     }
 
     // on exit it closes out
@@ -136,10 +140,10 @@ fn main() {
     )
     .unwrap();
 
-    for i in orders.iter() {
-        let cost_profit = i.cost_profit();
-        println!("{:?}", cost_profit)
-    }
-
-    println!("{}", OrdersVec(orders));
+    println!(
+        "{}\n\nTotal Sales (gross): {}\n\nTotal profit: {}",
+        OrdersVec(orders),
+        total_cost_profit[0],
+        total_cost_profit[1]
+    );
 }
