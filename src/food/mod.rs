@@ -104,7 +104,7 @@ impl Display for Items {
     ///     },
     /// };
     ///
-    ///     assert!(format!("{items}").as_str() == "food: {\n    0: costs $0.00\n},\ndrinks: {\n    1: costs $1.00\n},\nsides: {\n    2: costs $2.00\n},");
+    /// assert!(format!("{items}").as_str() == "food: {0: costs $0.00}, drinks: {1: costs $1.00}, sides: {2: costs $2.00}");
     /// ```
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut food: String = String::new();
