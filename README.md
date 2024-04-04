@@ -1,7 +1,10 @@
 # 7dit_as_91896_2.7
 
 # Aim
-The Aim is to make a cool cashflow program. For this program to calculate cash flow like (Gross Sales, ...).
+The Aim is to make a cool cashflow program. For this program to calculate cash flow like (Gross Sales, profits).
+
+## Note 
+This Is CLI Application First.
 
 # Use
 ```zsh
@@ -9,7 +12,7 @@ The Aim is to make a cool cashflow program. For this program to calculate cash f
     cargo run
 
 
-    # Build The Program To `./target/release/build/dit_as_91896_2.?`
+    # Build The Program To `./target/release/build/dit_as_91896_2...`
     Cargo Build --release 
 
     
