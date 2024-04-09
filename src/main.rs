@@ -33,7 +33,7 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
 
         let add_vec: Vec<&str> = add.trim().split_whitespace().collect();
 
-        let found: bool = match order.order_add(add_vec.join(" ")) {
+        let found: bool = match order.order_add(add_vec.join(" ").to_lowercase()) {
             Ok(_) => true,
             Err(_) => false,
         };
@@ -65,37 +65,37 @@ fn user_order(user_menu: &Items, cost_menu: &Items, number_order: usize) -> Orde
 fn main() {
     let food: Items = Items {
         food: hash_map! {
-            String::from("Black Bean Beef Burrito") => 16.0,
-            String::from("Extra Spicy Beff barrito") => 14.5,
-            String::from("Corn Beff Barrito") => 16.0,
+            String::from("black bean beef burrito") => 16.0,
+            String::from("extra spicy beff barrito") => 14.5,
+            String::from("corn beff barrito") => 16.0,
         },
         drinks: hash_map! {
-            String::from("Coke") => 6.0,
-            String::from("Sprite") => 6.0,
-            String::from("Fanta") => 6.0
+            String::from("coke") => 6.0,
+            String::from("sprite") => 6.0,
+            String::from("fanta") => 6.0
         },
         sides: hash_map! {
-            String::from("Rice") => 3.5,
-            String::from("Corn Chips") => 5.0,
-            String::from("Guacamole") => 2.5
+            String::from("rice") => 3.5,
+            String::from("corn Chips") => 5.0,
+            String::from("guacamole") => 2.5
         },
     };
 
     let cost_of_food: Items = Items {
         food: hash_map! {
-            String::from("Black Bean Beef Burrito") => 7.5,
-            String::from("Extra Spicy Beff barrito") => 7.0,
-            String::from("Corn Beff Barrito") => 7.5,
+            String::from("black bean beef burrito") => 7.5,
+            String::from("extra spicy beff barrito") => 7.0,
+            String::from("corn beff barrito") => 7.5,
         },
         drinks: hash_map! {
-            String::from("Coke") => 3.0,
-            String::from("Sprite") => 3.0,
-            String::from("Fanta") => 3.0
+            String::from("coke") => 3.0,
+            String::from("sprite") => 3.0,
+            String::from("fanta") => 3.0
         },
         sides: hash_map! {
-            String::from("Rice") => 1.5,
-            String::from("Corn Chips") => 2.0,
-            String::from("Guacamole") => 0.5
+            String::from("rice") => 1.5,
+            String::from("corn Chips") => 2.0,
+            String::from("guacamole") => 0.5
         },
     };
 
