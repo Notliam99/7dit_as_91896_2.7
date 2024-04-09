@@ -1,3 +1,4 @@
+use inflector::Inflector;
 use std::fmt;
 use std::{collections::HashMap, fmt::Display};
 
@@ -53,6 +54,13 @@ impl Items {
         }
     }
 
+    /**
+    # view the menu in a prety format
+
+    no params
+
+    returns a `String`
+    */
     pub fn menu_view(&self) -> String {
         let mut food: String = String::new();
         let mut drinks: String = String::new();
@@ -60,23 +68,44 @@ impl Items {
 
         if self.food.keys().len() != 0usize {
             for (item, price) in &self.food {
-                food.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
+                food.push_str(
+                    format!(
+                        "{}: costs ${:.2},\n    ",
+                        item.as_str().to_title_case(),
+                        price
+                    )
+                    .as_str(),
+                );
             }
-            food.replace_range((food.len() - 1).., "")
+            food.replace_range((food.len() - 6).., "")
         }
 
         if self.drinks.keys().len() != 0usize {
             for (item, price) in &self.drinks {
-                drinks.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str())
+                drinks.push_str(
+                    format!(
+                        "{}: costs ${:.2},\n    ",
+                        item.as_str().to_title_case(),
+                        price
+                    )
+                    .as_str(),
+                )
             }
-            drinks.replace_range((drinks.len() - 1).., "")
+            drinks.replace_range((drinks.len() - 6).., "")
         }
 
         if self.sides.keys().len() != 0usize {
             for (item, price) in &self.sides {
-                sides.push_str(format!("{}: costs ${:.2},", item.as_str(), price).as_str());
+                sides.push_str(
+                    format!(
+                        "{}: costs ${:.2},\n    ",
+                        item.as_str().to_title_case(),
+                        price
+                    )
+                    .as_str(),
+                );
             }
-            sides.replace_range((sides.len() - 1).., "")
+            sides.replace_range((sides.len() - 6).., "")
         }
 
         String::from(format!(
